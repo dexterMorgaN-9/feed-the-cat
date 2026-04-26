@@ -45,59 +45,80 @@ const SITES = {
     label: 'distraction'
   }
 };
+
 const MOCHI_TICK  = 15;
 const HUNGER_TICK = 30;
 const MOCHI_CAP   = 999;
-const ALARM_MAP   = { awardMochi: award, updateHunger: hunger };
+
+const ALARM_MAP = {
+  awardMochi:   award,
+  updateHunger: hunger,
+};
 
 function urlcat(url) {
-  if (!url || /^(chrome|edge|about):/.test(url)) return null;
+  if (!url) return null;
+  if (/^(chrome|edge|about):/.test(url)) return null;
+
+  let host;
   try {
-    const host = new URL(url).hostname.replace(/^www\./, '');
-    for (const [k, cat] of Object.entries(SITES)) {
-      for (const d of cat.domains) {
-        const cd = d.replace(/^www\./, '');
-        if (host === cd || host.endsWith('.' + cd)) return { key: k, ...cat };
+    host = new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+
+  for (const [k, cat] of Object.entries(SITES)) {
+    for (const d of cat.domains) {
+      const clean = d.replace(/^www\./, '');
+      if (host === clean || host.endsWith('.' + clean)) {
+        return { key: k, ...cat };
       }
     }
-    return { key: 'unknown', mochi: 4, label: 'unknown' };
-  } catch { return null; }
+  }
+
+  return { key: 'unknown', mochi: 4, label: 'unknown' };
 }
 
-function mood(hunger, stats) {
+function mood(hunger_val, stats) {
   const total = (stats.productive + stats.neutral + stats.distraction) || 1;
-  const ratio = stats.productive / total;
-  if (hunger <= 10) return 'starving';
-  if (hunger <= 30) return 'sad';
-  if (hunger >= 80 && ratio >= 0.5) return 'thriving';
-  if (hunger >= 60) return 'happy';
-  if (hunger >= 40) return 'neutral';
+  const prod_ratio = stats.productive / total;
+
+  if (hunger_val <= 10) return 'starving';
+  if (hunger_val <= 30) return 'sad';
+  if (hunger_val >= 80 && prod_ratio >= 0.5) return 'thriving';
+  if (hunger_val >= 60) return 'happy';
+  if (hunger_val >= 40) return 'neutral';
+
   return 'sad';
 }
 
 async function load() {
   return new Promise(res => {
-    chrome.storage.local.get([
+    const keys = [
       'mochiCount', 'catMood', 'catHunger', 'lastFedTime',
       'lastActiveTime', 'todayStats', 'activeTabUrl', 'activeTabStart',
       'totalMochiEarned', 'streakDays', 'lastActiveDate',
-    ], data => {
-      const now = Date.now();
+    ];
+
+    chrome.storage.local.get(keys, data => {
+      const now   = Date.now();
       const today = new Date().toDateString();
+
+      const day_stats = data.todayStats?.date === today
+        ? data.todayStats
+        : { date: today, productive: 0, neutral: 0, distraction: 0, mochiEarned: 0 };
+
       res({
-        mochiCount:      data.mochiCount      ?? 10,
-        catMood:         data.catMood         ?? 'happy',
-        catHunger:       data.catHunger       ?? 80,
-        lastFedTime:     data.lastFedTime     ?? now,
-        lastActiveTime:  data.lastActiveTime  ?? now,
-        todayStats:      data.todayStats?.date === today
-                           ? data.todayStats
-                           : { date: today, productive: 0, neutral: 0, distraction: 0, mochiEarned: 0 },
-        activeTabUrl:    data.activeTabUrl    ?? null,
-        activeTabStart:  data.activeTabStart  ?? now,
+        mochiCount:       data.mochiCount       ?? 10,
+        catMood:          data.catMood          ?? 'happy',
+        catHunger:        data.catHunger        ?? 80,
+        lastFedTime:      data.lastFedTime      ?? now,
+        lastActiveTime:   data.lastActiveTime   ?? now,
+        todayStats:       day_stats,
+        activeTabUrl:     data.activeTabUrl     ?? null,
+        activeTabStart:   data.activeTabStart   ?? now,
         totalMochiEarned: data.totalMochiEarned ?? 0,
-        streakDays:      data.streakDays      ?? 1,
-        lastActiveDate:  data.lastActiveDate  ?? today,
+        streakDays:       data.streakDays       ?? 1,
+        lastActiveDate:   data.lastActiveDate   ?? today,
       });
     });
   });
@@ -108,44 +129,55 @@ async function save(patch) {
 }
 
 async function tabswitch(url) {
-  const s = await load();
+  const s   = await load();
   const now = Date.now();
+
   if (s.activeTabUrl && s.activeTabStart) {
     const mins = (now - s.activeTabStart) / 60000;
-    const cat = urlcat(s.activeTabUrl);
-    if (cat && mins > 0) {
+    const prev = urlcat(s.activeTabUrl);
+
+    if (prev && mins > 0) {
       const stats = { ...s.todayStats };
-      if (cat.key === 'productive')   stats.productive  += mins;
-      else if (cat.key === 'neutral')      stats.neutral     += mins;
-      else if (cat.key === 'distraction')  stats.distraction += mins;
+
+      if (prev.key === 'productive')        stats.productive  += mins;
+      else if (prev.key === 'neutral')      stats.neutral     += mins;
+      else if (prev.key === 'distraction')  stats.distraction += mins;
+
       await save({ todayStats: stats, activeTabUrl: url, activeTabStart: now });
       return;
     }
   }
+
   await save({ activeTabUrl: url, activeTabStart: now, lastActiveTime: now });
 }
 
 async function award() {
-  const s = await load();
-  const now = Date.now();
+  const s    = await load();
+  const now  = Date.now();
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+
   if (!tabs.length) return;
+
   const cat = urlcat(tabs[0].url);
   if (!cat) return;
 
   const gained = cat.mochi;
   const stats  = { ...s.todayStats };
+
   stats.mochiEarned = (stats.mochiEarned || 0) + gained;
-  if (cat.key === 'productive')   stats.productive  += MOCHI_TICK;
+
+  if (cat.key === 'productive')        stats.productive  += MOCHI_TICK;
   else if (cat.key === 'neutral')      stats.neutral     += MOCHI_TICK;
   else if (cat.key === 'distraction')  stats.distraction += MOCHI_TICK;
 
   const today = new Date().toDateString();
   let { streakDays, lastActiveDate } = s;
+
   if (lastActiveDate !== today) {
     const yest = new Date();
     yest.setDate(yest.getDate() - 1);
-    streakDays = lastActiveDate === yest.toDateString() ? streakDays + 1 : 1;
+
+    streakDays     = lastActiveDate === yest.toDateString() ? streakDays + 1 : 1;
     lastActiveDate = today;
   }
 
@@ -163,17 +195,21 @@ async function award() {
 async function hunger() {
   const s = await load();
   let { mochiCount, catHunger } = s;
+
   if (mochiCount > 0) {
-    const ate = Math.min(mochiCount, 20);
+    const ate  = Math.min(mochiCount, 20);
     mochiCount -= ate;
     catHunger   = Math.min(100, catHunger + ate);
   } else {
     catHunger = Math.max(0, catHunger - 25);
   }
+
+  const cur_mood = mood(catHunger, s.todayStats);
+
   await save({
     mochiCount,
     catHunger,
-    catMood:     mood(catHunger, s.todayStats),
+    catMood:     cur_mood,
     lastFedTime: mochiCount > 0 ? Date.now() : s.lastFedTime,
   });
 }
@@ -191,14 +227,18 @@ chrome.tabs.onActivated.addListener(async info => {
 });
 
 chrome.tabs.onUpdated.addListener(async (id, change, tab) => {
-  if (change.status === 'complete' && tab.active && tab.url) tabswitch(tab.url);
+  if (change.status === 'complete' && tab.active && tab.url) {
+    tabswitch(tab.url);
+  }
 });
 
 chrome.runtime.onMessage.addListener((msg, _, reply) => {
+
   if (msg.type === 'GET_STATE') {
     load().then(reply);
     return true;
   }
+
   if (msg.type === 'GET_CURRENT_SITE') {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const url = tabs[0]?.url ?? null;
@@ -206,8 +246,10 @@ chrome.runtime.onMessage.addListener((msg, _, reply) => {
     });
     return true;
   }
+
   if (msg.type === 'FORCE_HUNGER_UPDATE') {
     hunger().then(() => load().then(reply));
     return true;
   }
+
 });
