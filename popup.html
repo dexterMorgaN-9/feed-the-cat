@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mochi Cat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup-wrapper">
+
+    <div class="header">
+      <span class="logo-text">mochi cat</span>
+      <button class="info-btn" id="infoBtn" title="Info">ⓘ</button>
+    </div>
+
+    <div class="cat-stage">
+      <div class="cat-container" id="catContainer">
+        <div class="cat-svg-wrap" id="catSvgWrap"></div>
+        <div class="mood-bubble" id="moodBubble"></div>
+      </div>
+      <div class="particles" id="particles"></div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-text" id="statusText">happy & fed </div>
+    </div>
+
+    <div class="mochi-row">
+      <div class="mochi-pill">
+        <span class="mochi-icon"></span>
+        <span class="mochi-count" id="mochiCount">—</span>
+        <span class="mochi-label">mochi</span>
+      </div>
+      <div class="hunger-wrap">
+        <div class="hunger-label">fullness</div>
+        <div class="hunger-bar-bg">
+          <div class="hunger-bar-fill" id="hungerFill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <div class="stats-title">today's vibe</div>
+      <div class="stats-grid">
+        <div class="stat-pill productive">
+          <span class="stat-icon"></span>
+          <span class="stat-val" id="statProductive">0m</span>
+          <span class="stat-lbl">focused</span>
+        </div>
+        <div class="stat-pill neutral">
+          <span class="stat-icon"></span>
+          <span class="stat-val" id="statNeutral">0m</span>
+          <span class="stat-lbl">errands</span>
+        </div>
+        <div class="stat-pill distraction">
+          <span class="stat-icon"></span>
+          <span class="stat-val" id="statDistraction">0m</span>
+          <span class="stat-lbl">scrolling</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="current-site-row" id="currentSiteRow">
+      <span class="site-dot" id="siteDot"></span>
+      <span class="site-name" id="siteName">checking...</span>
+      <span class="site-mochi" id="siteMochi"></span>
+    </div>
+
+    <div class="info-panel hidden" id="infoPanel">
+      <div class="info-header">
+        <span>how it works</span>
+        <button class="close-btn" id="closeInfo">✕</button>
+      </div>
+      <div class="info-body">
+        <div class="info-row"><span> productive sites</span><span class="info-mochi">+7  / 15min</span></div>
+        <div class="info-row"><span> shopping / booking</span><span class="info-mochi">+5  / 15min</span></div>
+        <div class="info-row"><span> social / videos</span><span class="info-mochi">+3  / 15min</span></div>
+        <div class="info-divider"></div>
+        <div class="info-note">your cat gets hungry every 30 min and eats your mochi. keep working to keep her fed! 🐱</div>
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
