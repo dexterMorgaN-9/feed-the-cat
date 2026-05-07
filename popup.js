@@ -230,3 +230,5 @@ document.getElementById('closeInfo').addEventListener('click', () => {
 
 poll()
 setInterval(poll, 5000)
+
+
