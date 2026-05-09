@@ -1,62 +1,69 @@
-# Feed the Cat - Browser Extension
+# Feed The Cat 
 
-A productivity companion cat that gets happy when you work hard and sad when you slack off.
+A chrome extension that turns your browsing into cat food. work  → cat happy. go off → cat sad. it's that simple.
 
+---
 
-## How to Install (Chrome / Brave / Edge)
+## What It Does
 
-1. **Download and unzip** this folder somewhere on your computer (e.g. `Desktop/feed-the-cat`)
+There's a  cat living in your browser.
 
-2. Open your browser and go to:
-   - Chrome: `chrome://extensions`
-   - Brave: `brave://extensions`
-   - Edge: `edge://extensions`
+every 10 minutes, the extension checks what site you are on and drops some mochi (the currency) productive sites give more mochi, distractions give less. The cat automatically eats over time if you keep working, she stays fed and happy. if you spend the whole day on instagram, she gets sad and her mood changes.
 
-3. **Enable Developer Mode** (toggle in the top-right corner)
+---
 
-4. Click **"Load unpacked"**
+## The Mochi System
 
-5. Select the `mochi-cat` folder
+| site type | example sites | mochi earned |
+|---|---|---|
+| productive | github, notion, docs, figma, leetcode... | +7 /10min |
+| neutral | amazon, zomato, maps, booking... | +5 /10min |
+| distraction | youtube, twitter, reddit, netflix... | +3 /10min |
+| unknown | anything else | +4 /10min |
 
-6. The extension will appear in your toolbar. Click the puzzle piece icon and pin feed the cat.
+the cat eats automatically every 30 minutes. if you have mochi, she eats and gets fuller. if you don't have any (mochi = 0), she starts losing fullness fast.
 
+---
 
-# How Mochi Works
+## Cat Moods
 
-Site Type-->Examples-->Mochi per 15 min 
-Productive-->GitHub, Notion, Figma, Stack Overflow, Docs-->+7  
-Neutral-->Amazon, Booking, Zomato, Maps-->+5  
-Distraction-->YouTube, Instagram, TikTok, Reddit-->+3  
+Her mood depends on two things — how full she is, and what kind of browsing you've been doing today.
 
-- Every **15 minutes** on a site, you earn mochi
-- Your cat gets **hungry every 30 minutes** and eats your mochi
-- If you have mochi → cat eats → cat gets happy
-- If you have no mochi → cat gets sad 
-- Work productively to keep her **thriving** 
+- **thriving** — well fed + mostly productive. She's eating good.
+- **happy** — fed and doing okay.
+- **neutral** — just vibing. not great, not terrible.
+- **sad** — hungry or too much scrolling.
+- **starving** — you abandoned her. Fullness hit rock bottom.
 
-##  Cat Moods
+---
 
-Mood--->Condition 
--------------------------------------------
-Thriving--->Well fed + lots of productive time
-Happy--->Regularly fed 
-Neutral---> Getting by 
-Sad--->Hungry, been slacking
-Starving--->Hasn't eaten in a long time!
----------------------------------------------
-##  File Structure
+## The Popup
 
-# feed-the-cat/
-manifest.json      ← Extension config
-background.js      ← Time tracking + mochi logic
-popup.html         ← Popup UI structure
-popup.css          ← All the pink cuteness
-popup.js           ← UI rendering + cat SVGs
-icons/             ← Extension icons (replace with your art!)
----icon16.png
----icon32.png
----icon48.png
----icon128.png
+open it anytime to see:
 
+- the cat (animated, judging you)
+- your mochi count
+- her fullness bar (5 boxes)
+- today's stats — focused time, neutral time, and scroll time
+- what site you're on right now and what category it is
 
-Made with for focus, fun, and one very hungry cat.
+---
+
+## Install (dev mode)
+
+1. download or clone this repo
+2. go to `chrome://extensions`
+3. turn on developer mode (toggle, top right)
+4. click "load unpacked" and select the folder
+5. pin the extension, open the popup, and all done
+
+---
+
+## Notes
+
+- stats reset daily
+- mochi caps at 999 (you can't hoard forever)
+- the cat's fullness meter starts at 80% on a fresh install so she isn't immediately dying 
+
+---
+**If you found this helpful please give this a Star**

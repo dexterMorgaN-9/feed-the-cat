@@ -1,9 +1,9 @@
 const mood_imgs = {
   thriving: 'happycat.png',
   happy:    'happycat.png',
-  neutral:  'neutralcat.png',
-  sad:      'sadcat.png',
-  starving: 'sadcat.png',
+  neutral:  'cat-neutral.png',
+  sad:      'cat-sad.png',
+  starving: 'cat-sad.png',
 }
 
 const mood_bubbles = {
@@ -22,7 +22,6 @@ const mood_txt = {
   starving: 'starving!! feed me!',
 }
 
-// IDs we actually use
 const cat_img    = document.getElementById('cat_img')
 const mood_bub   = document.getElementById('mood_bubble')
 const status_el  = document.getElementById('status_txt')
@@ -39,7 +38,7 @@ const info_btn   = document.getElementById('info_btn')
 const hboxes = [0,1,2,3,4].map(i => document.getElementById('hb' + i))
 
 let prev_mochi = null
-let _dummy = null  // was gonna use this for something
+let _dummy = null 
 
 function fmt_mins(raw_mins) {
   const m = Math.round(raw_mins)
@@ -130,7 +129,7 @@ async function init() {
 }
 
 info_btn.addEventListener('click', () => {
-  chrome.tabs.create({ url: 'https://github.com' })
+  chrome.tabs.create({ url: 'https://github.com/dexterMorgaN-9/feed-the-cat/blob/main/README.md' })
 })
 
 init()
