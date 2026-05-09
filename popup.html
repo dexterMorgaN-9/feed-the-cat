@@ -3,87 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mochi Cat</title>
+  <title>Feed The Cat</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Short+Stack&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
+
   <div class="popup-wrapper">
 
-    <div class="header">
-      <span class="logo-text">mochi cat</span>
-      <button class="info-btn" id="infoBtn" title="Info">ⓘ</button>
+    <div class="header-row">
+      <img src="feed_the_cat.png" alt="Feed The Cat" class="title-img" />
+      <button class="info-btn" id="info_btn" title="View on GitHub">
+        <img src="ibutton.png" alt="info" class="info-icon" />
+      </button>
     </div>
 
-    <div class="cat-stage">
-      <div class="cat-container" id="catContainer">
-        <div class="cat-svg-wrap" id="catSvgWrap"></div>
-        <div class="mood-bubble" id="moodBubble"></div>
+    <div class="cat-stage" id="cat_stage">
+      <img src="mochi_bg.png" alt="" class="cat-bg" />
+      <img src="cat_boundary.png" alt="" class="cat-frame" />
+      <div class="cat-wrap">
+        <img src="happycat.png" alt="cat" class="cat-img" id="cat_img" />
       </div>
-      <div class="particles" id="particles"></div>
+      <div class="mood-bubble" id="mood_bubble">♡</div>
     </div>
 
-    <div class="status-bar">
-      <div class="status-text" id="statusText">happy & fed </div>
+    <div class="status-row">
+      <span class="status-text" id="status_txt">happy &amp; fed</span>
     </div>
 
     <div class="mochi-row">
       <div class="mochi-pill">
-        <span class="mochi-icon"></span>
-        <span class="mochi-count" id="mochiCount">—</span>
+        <span class="mochi-icon">◯</span>
+        <span class="mochi-count" id="mochi_cnt">--</span>
         <span class="mochi-label">mochi</span>
       </div>
-      <div class="hunger-wrap">
-        <div class="hunger-label">fullness</div>
-        <div class="hunger-bar-bg">
-          <div class="hunger-bar-fill" id="hungerFill"></div>
+
+      <div class="fullness-wrap">
+        <span class="fullness-label">fullness</span>
+        <div class="hunger-boxes">
+          <div class="hbox" id="hb0"></div>
+          <div class="hbox" id="hb1"></div>
+          <div class="hbox" id="hb2"></div>
+          <div class="hbox" id="hb3"></div>
+          <div class="hbox" id="hb4"></div>
         </div>
       </div>
     </div>
 
-    <div class="stats-section">
-      <div class="stats-title">today's vibe</div>
-      <div class="stats-grid">
-        <div class="stat-pill productive">
-          <span class="stat-icon"></span>
-          <span class="stat-val" id="statProductive">0m</span>
-          <span class="stat-lbl">focused</span>
+    <div class="vibe-section">
+      <img src="todays_vibes.png" alt="Today's Vibe" class="vibe-title-img" />
+      <div class="vibe-grid">
+
+        <div class="vibe-card">
+          <img src="focused.png" alt="Focused" class="vibe-bg-img" />
+          <span class="vibe-num" id="stat_focus">0m</span>
         </div>
-        <div class="stat-pill neutral">
-          <span class="stat-icon"></span>
-          <span class="stat-val" id="statNeutral">0m</span>
-          <span class="stat-lbl">errands</span>
+
+        <div class="vibe-card">
+          <img src="earn.png" alt="Earns" class="vibe-bg-img" />
+          <span class="vibe-num" id="stat_earn">0m</span>
         </div>
-        <div class="stat-pill distraction">
-          <span class="stat-icon"></span>
-          <span class="stat-val" id="statDistraction">0m</span>
-          <span class="stat-lbl">scrolling</span>
+
+        <div class="vibe-card">
+          <img src="scrolling.png" alt="Scrolling" class="vibe-bg-img" />
+          <span class="vibe-num" id="stat_scroll">0m</span>
         </div>
+
       </div>
     </div>
 
-    <div class="current-site-row" id="currentSiteRow">
-      <span class="site-dot" id="siteDot"></span>
-      <span class="site-name" id="siteName">checking...</span>
-      <span class="site-mochi" id="siteMochi"></span>
-    </div>
-
-    <div class="info-panel hidden" id="infoPanel">
-      <div class="info-header">
-        <span>how it works</span>
-        <button class="close-btn" id="closeInfo">✕</button>
-      </div>
-      <div class="info-body">
-        <div class="info-row"><span> productive sites</span><span class="info-mochi">+7  / 15min</span></div>
-        <div class="info-row"><span> shopping / booking</span><span class="info-mochi">+5  / 15min</span></div>
-        <div class="info-row"><span> social / videos</span><span class="info-mochi">+3  / 15min</span></div>
-        <div class="info-divider"></div>
-        <div class="info-note">your cat gets hungry every 30 min and eats your mochi. keep working to keep her fed! 🐱</div>
-      </div>
+    <div class="site-row" id="site_row">
+      <span class="site-dot" id="site_dot"></span>
+      <span class="site-name" id="site_name">checking...</span>
+      <span class="site-mochi" id="site_mochi"></span>
     </div>
 
   </div>
+
   <script src="popup.js"></script>
 </body>
 </html>

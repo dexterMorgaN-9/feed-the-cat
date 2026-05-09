@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Mochi Cat",
-  "version": "1.0.0",
+  "name": "Feed-The-Cat",
+  "version": "1.2.0",
   "description": "A productivity cat. happy when you work, sad when you dont.",
   "permissions": ["storage", "tabs", "alarms", "activeTab"],
   "host_permissions": ["<all_urls>"],
