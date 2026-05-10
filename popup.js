@@ -1,5 +1,5 @@
 const mood_imgs = {
-  thriving: 'happycat.png',
+  thriving: 'cat-thriving.png',
   happy:    'happycat.png',
   neutral:  'cat-neutral.png',
   sad:      'cat-sad.png',
