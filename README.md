@@ -29,11 +29,11 @@ the cat eats automatically every 30 minutes. if you have mochi, she eats and get
 
 Her mood depends on two things — how full she is, and what kind of browsing you've been doing today.
 
-- **thriving** — well fed + mostly productive. She's eating good.
-- **happy** — fed and doing okay.
-- **neutral** — just vibing. not great, not terrible.
-- **sad** — hungry or too much scrolling.
-- **starving** — you abandoned her. Fullness hit rock bottom.
+- **thriving** - well fed + mostly productive. She's eating good.
+- **happy** - fed and doing okay.
+- **neutral** - just vibing. not great, not terrible.
+- **sad** - hungry or too much scrolling.
+- **starving** - you abandoned her. Fullness hit rock bottom.
 
 ---
 
@@ -44,7 +44,7 @@ open it anytime to see:
 - the cat (animated, judging you)
 - your mochi count
 - her fullness bar (5 boxes)
-- today's stats — focused time, neutral time, and scroll time
+- today's stats - focused time, neutral time, and scroll time
 - what site you're on right now and what category it is
 
 ---

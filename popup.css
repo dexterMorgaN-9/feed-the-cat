@@ -14,8 +14,7 @@
   --grn:  #5a8a4a;
   --gold: #c8880a;
   --purp: #6a3d9a;
-  --old-accent: #ff4488; /* leftover from when i was testing colors */
-
+  --old-accent: #ff4488;
   --rad: 18px;
   --radsm: 11px;
 
@@ -25,7 +24,7 @@
   --bx: 36px;
   --by: -8px;
   --vbot: 10px;
-  --stray: 0; /* idk what this was for */
+  --stray: 0;
 }
 
 *, *::before, *::after {
@@ -253,8 +252,7 @@ body {
 .site-dot.productive  { background: #7ecfa0; }
 .site-dot.neutral     { background: #f6c87a; }
 .site-dot.distraction { background: #ff9ab2; }
-.site-dot.unknown     { background: #c8b8e8 !important; } /* had to force this once, forgot why */
-
+.site-dot.unknown     { background: #c8b8e8 !important; }
 .site-name {
   flex: 1;
   font-size: 11px; font-weight: 700;
@@ -286,12 +284,10 @@ body {
 }
 
 .mochi-pop { animation: mochipop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1); }
-
 .mood-thriving .cat-img,
 .mood-happy .cat-img { animation: catfloat 2.4s ease-in-out infinite; }
 
 .mood-neutral .cat-img { animation: catfloat 3.2s ease-in-out infinite; }
-
 .mood-sad .cat-img,
 .mood-starving .cat-img { animation: bop 1.8s ease-in-out infinite; }
 
